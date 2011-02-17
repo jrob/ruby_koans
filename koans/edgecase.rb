@@ -2,6 +2,15 @@
 # -*- ruby -*-
 
 require 'test/unit/assertions'
+begin
+  #puts "Check for win32console"
+  require 'rubygems'
+  require 'win32console'
+  include Win32::Console::ANSI
+rescue LoadError
+  raise 'You must gem install win32console to use color on Windows'
+end
+
 
 # --------------------------------------------------------------------
 # Support code for the Ruby Koans.
@@ -107,7 +116,8 @@ module EdgeCase
     def use_colors?
       return false if ENV['NO_COLOR']
       if ENV['ANSI_COLOR'].nil?
-        ! using_windows?
+	    #! using_windows?
+	    using_windows?
       else
         ENV['ANSI_COLOR'] =~ /^(t|y)/i
       end
